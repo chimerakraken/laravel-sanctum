@@ -10,10 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
-    public function user(){
-        return "test";
-    }
-
     public function register(Request $request){
         $user = User::create([
             'name' => $request->input('name'),
@@ -35,7 +31,13 @@ class AuthController extends Controller
         $cookie = cookie('jwt', $token, 60 * 24); // 1 day
 
         return response([
-            'message' => 'Success'
-        ])->withCookie($cookie);
+             'message' => $token
+            // 'message' => $token
+        ])->withCookie($token);
+    }
+
+    public function getUser(){
+         return User::All();
+        // return View('welcome');
     }
 }
