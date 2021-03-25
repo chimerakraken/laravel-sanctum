@@ -31,4 +31,24 @@ class User extends Authenticatable
         'password'
     ];
 
+
+    public function roles(){
+        return $this->belongsToMany('App\role');
+    }
+
+    /**
+     * check if theres a role and returns true if the given 
+     * role exists in the role_users table
+     */
+    public function hasAnyRole(string $role){
+        return null !== $this->roles()->where('name', $role)->first(); 
+    }
+
+    /** 
+     * check if the user has any given role and returns true if 
+     * the given role exists in the role_users table
+     */
+    public function hasAnyRoles(array $role){
+        return null !== $this->roles()->whereIn('name', $role)->first(); 
+    }
 }

@@ -5,6 +5,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -39,5 +40,16 @@ class AuthController extends Controller
     public function getUser(){
          return User::All();
         // return View('welcome');
+    }
+
+    public function PermissionTest(){
+        // if (Gate::denies('logged-in')) {
+        //     dd('No access');
+        // }
+
+        if (Gate::allows('is-admin')) {
+            return View('pages.test');
+        }
+        dd('you need to be admin');
     }
 }
